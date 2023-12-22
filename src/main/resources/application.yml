@@ -1,0 +1,25 @@
+spring:
+  themeleaf:
+    cache: false
+  datasource:
+    driver-calss-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ecdb?serverTimezone=Asia/Tokyo
+    username: root
+    
+    
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: True
+  mapper-locations:
+    - classpath*:/jp/co/internous/ecsite/model/mapper/**/*.xml
+    
+logging:
+  level:
+    org:
+      springframework: WARN
+    jp:
+      co:
+        internous:
+          ecsite:
+            model:
+              mapper: DEBUG
