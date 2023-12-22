@@ -22,66 +22,69 @@ public class AdminController {
 
 	@Autowired
 	private MstUserMapper userMapper;
-	
+
 	@Autowired
 	private MstGoodsMapper goodsMapper;
-	
+
 	@RequestMapping("/")
 	public String index() {
 		return "admintop";
 	}
-	
+
 	@PostMapping("/welcome")
 	public String welcome(LoginForm form, Model model) {
-		
+
 		MstUser user = userMapper.findByUserNameAndPassword(form);
-		
-		if(user == null) {
+
+		if (user == null) {
 			model.addAttribute("errMessage", "ユーザー名またはパスワードが違います。");
 			System.out.println("success!");
 			return "forward:/ecsite/admin/";
-		} 
+		}
 		if (user.getIsAdmin() == 0) {
 			model.addAttribute("errMessage", "管理者ではありません。");
-			return "forward:/ecsite/admin/" ;
+			return "forward:/ecsite/admin/";
 		}
-		
+
 		List<MstGoods> goods = goodsMapper.findAll();
 		model.addAttribute("userName", user.getUserName());
 		model.addAttribute("password", user.getPassword());
 		model.addAttribute("goods", goods);
-		
+
 		return "welcome";
 	}
+
 	@PostMapping("/goodsMst")
 	public String goodsMst(LoginForm f, Model m) {
 		m.addAttribute("userName", f.getUserName());
 		m.addAttribute("passoword", f.getPassword());
-		
+
 		return "goodsmst";
 	}
+
 	@PostMapping("/addGoods")
 	public String addGoods(GoodsForm goodsForm, LoginForm loginForm, Model m) {
 		m.addAttribute("userName", loginForm.getUserName());
 		m.addAttribute("password", loginForm.getPassword());
-		
+
 		MstGoods goods = new MstGoods();
 		goods.setGoodsName(goodsForm.getGoodsName());
 		goods.setPrice(goodsForm.getPrice());
-		
+
 		goodsMapper.insert(goods);
-		
+
 		return "forward:/ecsite/admin/welcome";
 	}
+
 	@ResponseBody
 	@PostMapping("/api/deleteGoods")
 	public String deleteApi(@RequestBody GoodsForm f, Model m) {
 		try {
 			goodsMapper.deleteById(f.getId());
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return "-1";
 		}
 		return "1";
 	}
-	
+
 }
