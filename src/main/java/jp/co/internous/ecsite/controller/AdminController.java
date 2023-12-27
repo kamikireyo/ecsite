@@ -57,7 +57,7 @@ public class AdminController {
 	@PostMapping("/goodsMst")
 	public String goodsMst(LoginForm f, Model m) {
 		m.addAttribute("userName", f.getUserName());
-		m.addAttribute("passoword", f.getPassword());
+		m.addAttribute("password", f.getPassword());
 
 		return "goodsmst";
 	}
@@ -72,7 +72,7 @@ public class AdminController {
 		goods.setPrice(goodsForm.getPrice());
 
 		goodsMapper.insert(goods);
-
+		
 		return "forward:/ecsite/admin/welcome";
 	}
 

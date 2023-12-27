@@ -52,7 +52,7 @@ public class IndexController {
 		MstUser user = userMapper.findByUserNameAndPassword(f);
 		if (user == null) {
 			user = new MstUser();
-			user.setUserName("ゲスト");
+			user.setFullName("ゲスト");
 		}
 		return gson.toJson(user);
 	}

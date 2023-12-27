@@ -77,9 +77,9 @@
         "price": tdList.item(2).innerText,
         "count": tdList.item(3).querySelector("input").value
       };
-      if (goodsInfo.count === "0" || goodsInfo.count === "") {
-        alert("注文数が0または空欄です。");
-        return; //注文数が0ならば、ここで関数の処理終了
+      if (goodsInfo.count <= "0") {
+        alert("注文数が正しくありません。注文数が0以下あるいは不適切な値である可能性があります。");
+        return; //注文数が0以下ならば、ここで関数の処理終了
       }
 
       //グローバル変数 cartList に対して。カート追加対象の商品情報をpushする
@@ -203,10 +203,10 @@
           historyList.forEach((history, index) => {
             //行(tr)作成
             const tr = document.createElement("tr");
-            
+
             //履歴情報の中から、表に出力するキーを限定するため配列化しておく
             const keys = ["goodsName", "itemCount", "createdAt"];
-            
+
             //for of ループで keys を回し、表のtdを作成、trに追加する
             for (key of keys) {
               const td = document.createElement("td");
